@@ -1,0 +1,688 @@
+[
+  {
+    "id": "E1",
+    "level": "easy",
+    "answer": "High Risk",
+    "focus": "sender",
+    "sender_name": "Northfield IT Helpdesk",
+    "sender_email": "security-alert@northfield-helpdesk.example",
+    "subject": "URGENT: Your account will be suspended in 24 hours",
+    "body": "Dear Student,\n\nWe detected unusual activity on your university account. Your account will be suspended within 24 hours unless you verify your password immediately.\n\nClick the link below to keep your access.\n\nNorthfield IT Helpdesk",
+    "links": [
+      {
+        "text": "https://northfield.example/verify",
+        "url": "http://northfield-helpdesk.example/verify"
+      }
+    ],
+    "red_flags": [
+      "Sender domain is northfield-helpdesk.example, not northfield.example",
+      "Threat of account suspension",
+      "Pressure to act within 24 hours",
+      "Asks you to verify your password",
+      "Link text does not match the real destination"
+    ],
+    "explanation": "Real IT departments do not ask for your password by email. The sender's domain only imitates the university's, and the message uses a threat and a deadline to rush you.",
+    "auth": {
+      "spf": "pass",
+      "dkim": "none",
+      "dmarc": "none"
+    },
+    "flag_tags": [
+      "sender",
+      "urgency",
+      "sensitive",
+      "link",
+      "generic"
+    ]
+  },
+  {
+    "id": "E2",
+    "level": "easy",
+    "answer": "Low Risk",
+    "focus": "sender",
+    "sender_name": "Prof. Martinez",
+    "sender_email": "a.martinez@northfield.example",
+    "subject": "CS101: Lecture moved to Room 204",
+    "body": "Hi everyone,\n\nThis Thursday's lecture will be in Room 204 instead of Room 110. Same time, 10:00 AM. Please bring your laptops for the lab exercise.\n\nSee you there,\nProf. Martinez",
+    "links": [],
+    "red_flags": [],
+    "explanation": "Trusted university domain, no links, no requests for information or money, and no pressure. This is a normal class announcement.",
+    "auth": {
+      "spf": "pass",
+      "dkim": "pass",
+      "dmarc": "pass"
+    },
+    "flag_tags": []
+  },
+  {
+    "id": "E3",
+    "level": "easy",
+    "answer": "High Risk",
+    "focus": "language",
+    "sender_name": "Prize Desk",
+    "sender_email": "winner@mail-rewards.example",
+    "subject": "You've won a $500 gift card!",
+    "body": "Congratulations! You have won a $500 gift card. To claim your prize within 24 hours, pay a small $5 shipping fee using the link below.\n\nDon't miss out!",
+    "links": [
+      {
+        "text": "Claim your prize",
+        "url": "http://go-short.example/prize123"
+      }
+    ],
+    "red_flags": [
+      "You never entered a contest",
+      "Prize requires you to pay a fee",
+      "Shortened link hides the destination",
+      "Deadline pressure"
+    ],
+    "explanation": "Genuine prizes never ask you to pay first. The shortened link hides where you would really land, and the 24-hour limit is there to stop you thinking.",
+    "auth": {
+      "spf": "fail",
+      "dkim": "fail",
+      "dmarc": "fail"
+    },
+    "flag_tags": [
+      "money",
+      "offer",
+      "link",
+      "urgency",
+      "auth"
+    ]
+  },
+  {
+    "id": "E4",
+    "level": "easy",
+    "answer": "Low Risk",
+    "focus": "links",
+    "sender_name": "Northfield Library",
+    "sender_email": "library@northfield.example",
+    "subject": "Library hours extended during finals",
+    "body": "Hello,\n\nTo help you study, the main library will stay open until 2:00 AM from December 5 to December 16. Quiet study rooms can be booked on the library website.",
+    "links": [
+      {
+        "text": "Library hours",
+        "url": "https://library.northfield.example/hours"
+      }
+    ],
+    "red_flags": [],
+    "explanation": "The sender and the link are both on the university's own domain, and the message only gives information. Nothing is being asked of you.",
+    "auth": {
+      "spf": "pass",
+      "dkim": "pass",
+      "dmarc": "pass"
+    },
+    "flag_tags": []
+  },
+  {
+    "id": "E5",
+    "level": "easy",
+    "answer": "Suspicious",
+    "focus": "sender",
+    "sender_name": "Campus Bookstore Deals",
+    "sender_email": "deals@bookstore-offers.example",
+    "subject": "Textbooks up to 60% off - this week only!",
+    "body": "Save big on required textbooks. Prices drop this week only. Browse the full catalogue below.",
+    "links": [
+      {
+        "text": "Browse the sale",
+        "url": "https://bookstore-offers.example/sale"
+      }
+    ],
+    "red_flags": [
+      "Name says 'Campus' but the domain is not the university's",
+      "'This week only' sales pressure"
+    ],
+    "explanation": "It is not clearly malicious, but it uses a campus-sounding name from an outside domain. Check the official bookstore website directly instead of using the email's link.",
+    "auth": {
+      "spf": "pass",
+      "dkim": "pass",
+      "dmarc": "none"
+    },
+    "flag_tags": [
+      "sender",
+      "urgency"
+    ]
+  },
+  {
+    "id": "E6",
+    "level": "easy",
+    "answer": "Suspicious",
+    "focus": "sender",
+    "sender_name": "Student Survey Team",
+    "sender_email": "survey@campus-feedback.example",
+    "subject": "Complete a 2-minute survey for a coffee voucher",
+    "body": "Dear Student,\n\nHelp improve campus life! Finish our short survey and receive a coffee voucher.",
+    "links": [
+      {
+        "text": "Start survey",
+        "url": "https://campus-feedback.example/survey"
+      }
+    ],
+    "red_flags": [
+      "Official-sounding name from an outside domain",
+      "Generic greeting ('Dear Student')",
+      "Reward used as bait"
+    ],
+    "explanation": "Surveys are a common way to collect personal data. Because the sender is not on the university domain, treat it with caution and confirm with the student office.",
+    "auth": {
+      "spf": "pass",
+      "dkim": "none",
+      "dmarc": "none"
+    },
+    "flag_tags": [
+      "sender",
+      "generic",
+      "offer"
+    ]
+  },
+  {
+    "id": "M1",
+    "level": "medium",
+    "answer": "Suspicious",
+    "focus": "language",
+    "sender_name": "Jane Holloway, Remote Staffing",
+    "sender_email": "jane.holloway.jobs@freemail.example",
+    "subject": "Flexible remote assistant job - no experience needed",
+    "body": "Hello,\n\nWe are hiring students for a remote assistant role. Earn $400 per week working just a few hours. No experience needed. Reply with your phone number and availability and we will send details.",
+    "links": [],
+    "red_flags": [
+      "Free personal email address for a 'company'",
+      "Unrealistic pay for little work",
+      "No company details or job description"
+    ],
+    "explanation": "Fake job offers target students who need money. Vague roles, high pay and a free mail address are classic signs. Verify real jobs through the university career centre.",
+    "auth": {
+      "spf": "pass",
+      "dkim": "none",
+      "dmarc": "none"
+    },
+    "flag_tags": [
+      "sender",
+      "offer"
+    ]
+  },
+  {
+    "id": "M2",
+    "level": "medium",
+    "answer": "High Risk",
+    "focus": "sender",
+    "sender_name": "Northfield Scholarship Committee",
+    "sender_email": "scholarships@northfield-awards.example",
+    "subject": "You've been selected for a $2,000 scholarship",
+    "body": "Congratulations!\n\nYou have been selected for the Northfield Excellence Award. To confirm your eligibility, submit your student ID number and date of birth using the form below.",
+    "links": [
+      {
+        "text": "Confirm eligibility",
+        "url": "https://northfield-awards.example/apply"
+      }
+    ],
+    "red_flags": [
+      "Domain northfield-awards.example is not northfield.example",
+      "You did not apply",
+      "Asks for ID number and date of birth"
+    ],
+    "explanation": "Scammers combine the university name with an outside domain and ask for identity details. A real scholarship office would use the official domain and never ask for this by email.",
+    "auth": {
+      "spf": "pass",
+      "dkim": "pass",
+      "dmarc": "pass"
+    },
+    "flag_tags": [
+      "sender",
+      "sensitive",
+      "offer",
+      "link"
+    ]
+  },
+  {
+    "id": "M3",
+    "level": "medium",
+    "answer": "Low Risk",
+    "focus": "links",
+    "sender_name": "Office of the Registrar",
+    "sender_email": "registrar@northfield.example",
+    "subject": "Spring registration opens December 1",
+    "body": "Hello,\n\nSpring course registration opens on December 1. Review your registration time in the student portal and register before the December 12 deadline.",
+    "links": [
+      {
+        "text": "Student portal",
+        "url": "https://portal.northfield.example/registration"
+      }
+    ],
+    "red_flags": [],
+    "explanation": "A deadline alone is not a warning sign. The sender and link are both on the university domain, and nothing asks for a password or payment.",
+    "auth": {
+      "spf": "pass",
+      "dkim": "pass",
+      "dmarc": "pass"
+    },
+    "flag_tags": []
+  },
+  {
+    "id": "M4",
+    "level": "medium",
+    "answer": "Suspicious",
+    "focus": "links",
+    "sender_name": "Parcel Service",
+    "sender_email": "tracking@parcel-notify.example",
+    "subject": "Your package could not be delivered",
+    "body": "Dear customer,\n\nWe tried to deliver your package but no one was home. Confirm your address within 48 hours to reschedule.",
+    "links": [
+      {
+        "text": "Reschedule delivery",
+        "url": "http://parcel-notify.example/track"
+      }
+    ],
+    "red_flags": [
+      "Generic greeting",
+      "Unencrypted http link",
+      "Deadline pressure",
+      "You may not be expecting a parcel"
+    ],
+    "explanation": "Delivery notices are a very common lure. If you are not expecting a parcel, go to the courier's official site yourself rather than using the link.",
+    "auth": {
+      "spf": "pass",
+      "dkim": "none",
+      "dmarc": "none"
+    },
+    "flag_tags": [
+      "generic",
+      "urgency",
+      "link"
+    ]
+  },
+  {
+    "id": "M5",
+    "level": "medium",
+    "answer": "High Risk",
+    "focus": "sender",
+    "sender_name": "Payroll Department",
+    "sender_email": "payroll@northfield.example.hr-portal.example",
+    "subject": "Update your direct deposit details",
+    "body": "Hello,\n\nTo make sure your next payment arrives, please provide your bank account number and routing number by replying to this email.",
+    "links": [],
+    "red_flags": [
+      "The real domain is hr-portal.example (northfield.example is only a prefix)",
+      "Asks for bank account details by email"
+    ],
+    "explanation": "Read domains from right to left. 'northfield.example' appears at the front, but the address actually ends in hr-portal.example. Payroll changes are made in the official portal.",
+    "auth": {
+      "spf": "fail",
+      "dkim": "none",
+      "dmarc": "fail"
+    },
+    "flag_tags": [
+      "sender",
+      "sensitive",
+      "auth"
+    ]
+  },
+  {
+    "id": "M6",
+    "level": "medium",
+    "answer": "Low Risk",
+    "focus": "links",
+    "sender_name": "Chess Club",
+    "sender_email": "chess@northfield.example",
+    "subject": "Meeting this Thursday at 6 PM",
+    "body": "Hi members,\n\nWe meet Thursday at 6 PM in the Student Union, room 3. Bring a board if you have one. Details are on our club page.",
+    "links": [
+      {
+        "text": "Club page",
+        "url": "https://clubs.northfield.example/chess"
+      }
+    ],
+    "red_flags": [],
+    "explanation": "Trusted domain, a link on the university's own site, and a routine request. Nothing unusual.",
+    "auth": {
+      "spf": "pass",
+      "dkim": "pass",
+      "dmarc": "pass"
+    },
+    "flag_tags": []
+  },
+  {
+    "id": "H1",
+    "level": "hard",
+    "answer": "High Risk",
+    "focus": "links",
+    "sender_name": "Northfield Single Sign-On",
+    "sender_email": "no-reply@northfie1d.example",
+    "subject": "Your session has expired",
+    "body": "Hello,\n\nFor your security your session has expired. Please sign in again to continue using your university services.\n\nThank you,\nNorthfield Identity Services",
+    "links": [
+      {
+        "text": "https://sso.northfield.example",
+        "url": "https://sso.northfie1d.example/login"
+      }
+    ],
+    "red_flags": [
+      "The domain has a digit 1 in place of the letter l (northfie1d)",
+      "The link text does not match where the link goes",
+      "Polished wording hides a fake login page"
+    ],
+    "explanation": "No scare tactics here, which is what makes it hard. Zoom in on the domain: 'northfie1d' uses the number 1. The login page it leads to would steal your credentials. Note that the authentication checks all pass: the attacker owns the look-alike domain, so 'pass' only proves the email came from that domain, not that the domain is trustworthy.",
+    "auth": {
+      "spf": "pass",
+      "dkim": "pass",
+      "dmarc": "pass"
+    },
+    "flag_tags": [
+      "sender",
+      "link"
+    ]
+  },
+  {
+    "id": "H2",
+    "level": "hard",
+    "answer": "High Risk",
+    "focus": "sender",
+    "sender_name": "Professor Chen",
+    "sender_email": "j.chen@northfield.example",
+    "reply_to": "j.chen.northfield@freemail.example",
+    "subject": "Quick favor",
+    "body": "Hi,\n\nI'm in a meeting and can't talk. I need 4 gift cards for a department event. Please buy them and reply with the codes. I'll reimburse you.",
+    "links": [],
+    "red_flags": [
+      "Reply-To goes to a free personal address",
+      "Request for gift card codes",
+      "Unusual request from someone in authority"
+    ],
+    "explanation": "The sender looks real, but replies go to a personal address. Gift-card requests from a 'busy boss' are a well-known scam, either spoofed or sent from a hacked account. The failed SPF/DMARC checks in the headers back this up.",
+    "auth": {
+      "spf": "fail",
+      "dkim": "none",
+      "dmarc": "fail"
+    },
+    "flag_tags": [
+      "replyto",
+      "money",
+      "auth"
+    ]
+  },
+  {
+    "id": "H3",
+    "level": "hard",
+    "answer": "Low Risk",
+    "focus": "links",
+    "sender_name": "Financial Aid Office",
+    "sender_email": "finaid@northfield.example",
+    "subject": "Your aid package has been updated",
+    "body": "Hello,\n\nYour financial aid package has been updated for the spring term. Please log in to the student portal to review your award.\n\nFinancial Aid Office",
+    "links": [
+      {
+        "text": "Student portal",
+        "url": "https://portal.northfield.example/finaid"
+      }
+    ],
+    "red_flags": [],
+    "explanation": "It mentions money and a login, which can feel risky, but the sender and link are both on the university domain and it asks for no information. Not every message about aid is a scam.",
+    "auth": {
+      "spf": "pass",
+      "dkim": "pass",
+      "dmarc": "pass"
+    },
+    "flag_tags": []
+  },
+  {
+    "id": "H4",
+    "level": "hard",
+    "answer": "High Risk",
+    "focus": "links",
+    "sender_name": "Northfield IT Security",
+    "sender_email": "mfa-team@northfield.example",
+    "subject": "Action needed: set up multi-factor authentication",
+    "body": "Hello,\n\nAll students must register for multi-factor authentication this month. Follow the link below to complete setup.",
+    "links": [
+      {
+        "text": "https://mfa.northfield.example",
+        "url": "https://xn--northfeld-9ya.example/mfa"
+      }
+    ],
+    "red_flags": [
+      "The link uses 'xn--' encoding, which can disguise look-alike letters",
+      "Link text and real destination differ"
+    ],
+    "explanation": "The sender address looks fine, but the link does not go where it says. Always check the real destination before clicking; if in doubt, open the MFA page by typing the official address. The failed SPF and DMARC checks in the email headers also show it was not really sent by the university.",
+    "auth": {
+      "spf": "fail",
+      "dkim": "none",
+      "dmarc": "fail"
+    },
+    "flag_tags": [
+      "link",
+      "auth"
+    ]
+  },
+  {
+    "id": "H5",
+    "level": "hard",
+    "answer": "Suspicious",
+    "focus": "language",
+    "sender_name": "Dr. Priya Nair",
+    "sender_email": "priya.nair@research-symposium.example",
+    "subject": "Invitation: invited speaker at International Symposium",
+    "body": "Dear Researcher,\n\nBased on your recent work, we would like to invite you to speak at our symposium. A refundable registration fee of $150 secures your slot. Please see the details on our site.",
+    "links": [
+      {
+        "text": "Symposium details",
+        "url": "https://research-symposium.example/speakers"
+      }
+    ],
+    "red_flags": [
+      "Unsolicited invitation",
+      "Asks for a fee up front",
+      "No verifiable organisation behind it"
+    ],
+    "explanation": "Predatory conferences flatter you and then charge a fee. It may be a scam or just low quality, so check the organisers independently before paying or replying.",
+    "auth": {
+      "spf": "pass",
+      "dkim": "none",
+      "dmarc": "none"
+    },
+    "flag_tags": [
+      "money",
+      "offer"
+    ]
+  },
+  {
+    "id": "H6",
+    "level": "hard",
+    "answer": "Suspicious",
+    "focus": "links",
+    "sender_name": "Alex Rivera",
+    "sender_email": "alex.rivera@northfield.example",
+    "subject": "Shared a document with you",
+    "body": "Hey, I shared our group project notes with you. Open the link to take a look.",
+    "links": [
+      {
+        "text": "Group Project Notes",
+        "url": "https://docs-share.example/d/8f3a"
+      }
+    ],
+    "red_flags": [
+      "Link leads outside the university to an unknown site",
+      "Very short message with no context"
+    ],
+    "explanation": "The sender's address is real and every authentication check passes, because the email genuinely came from Alex's account. That is exactly why a hacked account is dangerous. An unexpected link to an unknown site deserves a quick check with Alex through another channel. The rule-based detector often misses this one.",
+    "auth": {
+      "spf": "pass",
+      "dkim": "pass",
+      "dmarc": "pass"
+    },
+    "flag_tags": [
+      "link"
+    ]
+  },
+  {
+    "id": "N1",
+    "level": "easy",
+    "answer": "High Risk",
+    "focus": "language",
+    "sender_name": "Student Loan Relief Office",
+    "sender_email": "relief@loan-forgiveness-center.example",
+    "subject": "Your student loan qualifies for 100% forgiveness",
+    "body": "Congratulations!\n\nYour federal student loan has been approved for full forgiveness. To finalize, confirm your date of birth and bank account details within 48 hours or your approval will be cancelled.",
+    "links": [
+      {
+        "text": "Finalize forgiveness",
+        "url": "https://loan-forgiveness-center.example/claim"
+      }
+    ],
+    "auth": {
+      "spf": "pass",
+      "dkim": "none",
+      "dmarc": "none"
+    },
+    "flag_tags": [
+      "sender",
+      "sensitive",
+      "offer",
+      "urgency"
+    ],
+    "red_flags": [
+      "Official-sounding name but an unrelated outside domain",
+      "Too-good-to-be-true offer",
+      "Asks for date of birth and bank details",
+      "48-hour deadline"
+    ],
+    "explanation": "Real loan servicers do not announce forgiveness by email and never ask for bank details to 'finalize' it. Loan relief is a popular lure for students; check your loan servicer's official site yourself."
+  },
+  {
+    "id": "N2",
+    "level": "medium",
+    "answer": "High Risk",
+    "focus": "sender",
+    "sender_name": "Bursar Office Refunds",
+    "sender_email": "refunds@northfeld.example",
+    "subject": "You have a tuition refund of $842 waiting",
+    "body": "Hello,\n\nA refund of $842 is available for your account. To receive it, confirm your bank account number using the secure form below.",
+    "links": [
+      {
+        "text": "Claim refund",
+        "url": "https://northfeld.example/refund"
+      }
+    ],
+    "auth": {
+      "spf": "pass",
+      "dkim": "pass",
+      "dmarc": "none"
+    },
+    "flag_tags": [
+      "sender",
+      "sensitive",
+      "link"
+    ],
+    "red_flags": [
+      "Domain is northfeld.example, missing the letter 'i'",
+      "Asks for a bank account number",
+      "Link goes to the same look-alike domain"
+    ],
+    "explanation": "One missing letter turns northfield.example into northfeld.example. Refunds are handled inside the official student portal, not through a form sent by email."
+  },
+  {
+    "id": "N3",
+    "level": "medium",
+    "answer": "Suspicious",
+    "focus": "sender",
+    "sender_name": "Housing Selection Team",
+    "sender_email": "housing-select@campus-living.example",
+    "subject": "Room selection closes tonight!",
+    "body": "Hi,\n\nRoom selection for next year closes tonight. Choose your room now through the link below before the best rooms are gone.",
+    "links": [
+      {
+        "text": "Choose your room",
+        "url": "https://campus-living.example/select"
+      }
+    ],
+    "auth": {
+      "spf": "pass",
+      "dkim": "none",
+      "dmarc": "none"
+    },
+    "flag_tags": [
+      "sender",
+      "urgency"
+    ],
+    "red_flags": [
+      "Official-sounding name from a non-university domain",
+      "Pressure to act tonight"
+    ],
+    "explanation": "Housing deadlines are a real worry for students, which scammers exploit. Check the dates in the official housing portal rather than trusting an outside domain."
+  },
+  {
+    "id": "N4",
+    "level": "hard",
+    "answer": "High Risk",
+    "focus": "links",
+    "sender_name": "Campus Parking Services",
+    "sender_email": "parking@campus-parking-pay.example",
+    "subject": "Unpaid parking violation - $65",
+    "body": "Your vehicle has an unpaid parking violation of $65. Scan the QR code below to pay within 24 hours and avoid a late fee.\n\n[ QR CODE IMAGE ]",
+    "links": [
+      {
+        "text": "[QR code] Scan to pay",
+        "url": "http://go-short.example/pay-ticket"
+      }
+    ],
+    "auth": {
+      "spf": "pass",
+      "dkim": "none",
+      "dmarc": "none"
+    },
+    "flag_tags": [
+      "sender",
+      "link",
+      "urgency"
+    ],
+    "red_flags": [
+      "QR code hides the real destination (a shortened http link)",
+      "Official-sounding sender on an outside domain",
+      "24-hour deadline"
+    ],
+    "explanation": "This is 'quishing': QR-code phishing. You cannot read a QR code's destination by eye. Pay parking fines through the official campus website, and be wary of QR codes on emails or flyers."
+  },
+  {
+    "id": "N5",
+    "level": "easy",
+    "answer": "Low Risk",
+    "focus": "sender",
+    "sender_name": "Residence Life",
+    "sender_email": "reslife@northfield.example",
+    "subject": "Move-out reminders for winter break",
+    "body": "Hello residents,\n\nResidence halls close on December 18 at noon. A checklist for moving out is available on the housing website. Have a great break!",
+    "links": [
+      {
+        "text": "Move-out checklist",
+        "url": "https://housing.northfield.example/moveout"
+      }
+    ],
+    "auth": {
+      "spf": "pass",
+      "dkim": "pass",
+      "dmarc": "pass"
+    },
+    "flag_tags": [],
+    "red_flags": [],
+    "explanation": "Trusted university sender, link on the university's own housing site, and no request for money or personal details. It is routine."
+  },
+  {
+    "id": "N6",
+    "level": "hard",
+    "answer": "Low Risk",
+    "focus": "language",
+    "sender_name": "Northfield IT Services",
+    "sender_email": "it-notices@northfield.example",
+    "subject": "Scheduled maintenance on Saturday",
+    "body": "Hello,\n\nEmail and campus Wi-Fi may be briefly unavailable on Saturday between 2 and 4 AM while we upgrade our systems. No action is needed. Remember, IT will never ask for your password by email.\n\nNorthfield IT Services",
+    "links": [],
+    "auth": {
+      "spf": "pass",
+      "dkim": "pass",
+      "dmarc": "pass"
+    },
+    "flag_tags": [],
+    "red_flags": [],
+    "explanation": "The word 'password' appears, but only in a warning. Look at what the email actually asks you to do: nothing. A good rule is to judge the request, not just keywords."
+  }
+]
